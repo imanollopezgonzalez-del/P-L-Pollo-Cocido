@@ -1299,11 +1299,11 @@ function renderCargaSubForms(){
     <div class="ff">
       <label style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
         <input value="${s.n}" style="${iStyle('font-size:11px;font-weight:500;color:var(--text-m)')}"
-          onchange="_cargaSueldos[${i}].n=this.value">
+          oninput="_cargaSueldos[${i}].n=this.value" onchange="_cargaSueldos[${i}].n=this.value">
       </label>
       <input type="number" value="${s.m||0}" placeholder="0"
         style="${iStyle('font-family:DM Mono,monospace;font-size:13px')}"
-        onchange="_cargaSueldos[${i}].m=parseNum(this.value)">
+        oninput="_cargaSueldos[${i}].m=parseNum(this.value)" onchange="_cargaSueldos[${i}].m=parseNum(this.value)">
       <button onclick="_cargaSueldos.splice(${i},1);renderCargaSubForms()"
         style="background:none;border:none;color:var(--red);cursor:pointer;font-size:10px;margin-top:2px;padding:0">✕ quitar</button>
     </div>`).join('');
@@ -1312,11 +1312,11 @@ function renderCargaSubForms(){
   const rb=document.getElementById('repr-body');
   if(rb) rb.innerHTML=_cargaRepr.map((r,i)=>`<tr>
     <td><input value="${r.d||''}" placeholder="Descripción" style="${iStyle()}"
-      onchange="_cargaRepr[${i}].d=this.value"></td>
+      oninput="_cargaRepr[${i}].d=this.value" onchange="_cargaRepr[${i}].d=this.value"></td>
     <td style="text-align:right">
       <input type="number" value="${r.m||0}" step="1" placeholder="0"
         style="${iStyle('width:110px;text-align:right;font-family:DM Mono,monospace')}"
-        onchange="_cargaRepr[${i}].m=parseNum(this.value)">
+        oninput="_cargaRepr[${i}].m=parseNum(this.value)" onchange="_cargaRepr[${i}].m=parseNum(this.value)">
     </td>
     <td><button style="background:none;border:none;color:var(--red);cursor:pointer;font-size:12px"
       onclick="_cargaRepr.splice(${i},1);renderCargaSubForms()">✕</button></td>
