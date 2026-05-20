@@ -1092,7 +1092,7 @@ function renderAnual(){
   }
   const tv=all.reduce((a,m)=>a+m.ventas_netas,0);
   const tcmv=all.reduce((a,m)=>a+m.cmv,0);
-  const trb=tv-tcmv-tfilm;
+  const trb=tv-tcmv;
   const tcm=all.reduce((a,m)=>a+m.contrib_marginal,0);
   const tgo=all.reduce((a,m)=>a+Object.values(m.gastos).reduce((x,y)=>x+y,0),0);
   const tro=all.reduce((a,m)=>a+m.resultado_operativo,0);
