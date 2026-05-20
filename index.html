@@ -1531,7 +1531,7 @@ function processMonth(){
   };
   const gastos_det=_cargaSueldos.filter(s=>s.m>0).map(s=>({sku:'FIJO',d:s.n,r:'Sueldos',m:s.m}));
   // Add Representación Luciano items
-  _cargaRepr.filter(r=>r.m>0).forEach(r=>gastos_det.push({sku:1719,d:r.d||'Representación Luciano',r:'Honorarios Profesionales',m:r.m}));
+  _cargaRepr.filter(r=>r.m>0).forEach(r=>gastos_det.push({sku:1719,d:r.d||'Representación Luciano',r:'Honorarios y Varios',m:r.m}));
 
   _gd.forEach(r=>{
     if(r.length<3) return;
