@@ -548,7 +548,7 @@ async function ls(){
   }catch(e){console.error('Firebase load error:',e);}
 }
 const PC=['#c9a84c','#4caf82','#5e8fc9','#d4853a','#9b6fc9','#e05252','#60c9c2','#a8c96e','#e8a870','#7d9ec9','#c97a8a','#8ec98a','#c9b87a','#6ab0c9'];
-const RC={'Sueldos':'#C72223','Alquiler':'#5e8fc9','Servicios':'#4caf82','Gastos Varios':'#d4853a','Honorarios Profesionales':'#9b6fc9','Impuestos':'#e8a870','Mantenimiento Local':'#60c9c2','Camionetas':'#a8c96e','Gastos Bancarios':'#8ec98a'};
+const RC={'Sueldos':'#C72223','Alquileres y Servicios':'#5e8fc9','Logística':'#4caf82','Honorarios y Varios':'#9b6fc9','Mantenimiento':'#d4853a','Gastos Bancarios':'#8ec98a'};
 const MN=['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const MNS=['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
@@ -556,74 +556,72 @@ const MNS=['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov',
 // ── SKU → RUBRO MAP (from GASTOS_BASE) ──
 // tipo: 'sistema' = from exported gastos | 'fijo' = from maestro sueldos | 'auto' = calculated
 const SKU_RUBRO = {
-  // E001 — SUELDOS
+  // SUELDOS — FIJO
   1277:{r:'Sueldos',d:'Sueldo Ivan 75%',t:'fijo'},
   1655:{r:'Sueldos',d:'Sueldo Flavia 75%',t:'fijo'},
   1656:{r:'Sueldos',d:'Sueldo German 75%',t:'fijo'},
   1657:{r:'Sueldos',d:'Sueldo Rodrigo 75%',t:'fijo'},
   1684:{r:'Sueldos',d:'Sueldo Imanol 75%',t:'fijo'},
   1722:{r:'Sueldos',d:'Sueldo Ezequiel 75%',t:'fijo'},
+  // SUELDOS — SISTEMA
   1279:{r:'Sueldos',d:'Obra Social 75%',t:'sistema'},
   1669:{r:'Sueldos',d:'Autonomos Gabriel',t:'sistema'},
   1696:{r:'Sueldos',d:'Monotributo Ivan 75%',t:'sistema'},
   1710:{r:'Sueldos',d:'Monotributo Rodrigo 75%',t:'sistema'},
   1715:{r:'Sueldos',d:'Monotributo Flavia 75%',t:'sistema'},
   1724:{r:'Sueldos',d:'Monotributo Ezequiel 75%',t:'sistema'},
-  // E003 — GASTOS BANCARIOS
-  1295:{r:'Gastos Bancarios',d:'Comision Mantenimiento Bancario',t:'sistema'},
-  1464:{r:'Gastos Bancarios',d:'Gastos Bancarios',t:'sistema'},
-  // E005 — GASTOS VARIOS
-  89:{r:'Gastos Varios',d:'Gastos Varios',t:'sistema'},
-  275:{r:'Gastos Varios',d:'Atención con Clientes y Proveedores',t:'sistema'},
-  1287:{r:'Gastos Varios',d:'Libreria y Papelería 75%',t:'sistema'},
-  1306:{r:'Gastos Varios',d:'Gastos de Movilidad',t:'sistema'},
-  1463:{r:'Gastos Varios',d:'Gastos de Limpieza 75%',t:'sistema'},
-  1634:{r:'Gastos Varios',d:'Gastos de Almuerzo Personal',t:'sistema'},
-  1732:{r:'Gastos Varios',d:'Indumentaria del personal 75%',t:'sistema'},
-  // E006 — COMISIONES VENTA
+  // COMISIONES — AUTO (se deducen antes del Res.Bruto, NO van como gasto operativo)
   301:{r:'Comisión $',d:'Comisiones Hernan',t:'auto'},
   1652:{r:'Comisión $',d:'Comisiones Ivan',t:'auto'},
   1692:{r:'Comisión $',d:'Comisiones Imanol',t:'auto'},
   1697:{r:'Comisión $',d:'Comisiones Carlos Mendoza',t:'auto'},
   1705:{r:'Comisión $',d:'Comisiones Cristian Werbach',t:'auto'},
   1727:{r:'Comisión $',d:'Comisiones Pedro Marin',t:'auto'},
-  // E008 — ALQUILER
-  209:{r:'Alquiler',d:'Alquiler 75%',t:'sistema'},
-  1320:{r:'Alquiler',d:'Mantenimiento Deposito y Camara',t:'sistema'},
-  1736:{r:'Alquiler',d:'Depósito de Frío Externo 75%',t:'sistema'},
-  // E011 — HONORARIOS PROFESIONALES
-  1666:{r:'Honorarios Profesionales',d:'Honorarios Contador',t:'sistema'},
-  1667:{r:'Honorarios Profesionales',d:'Honorarios Abogado',t:'sistema'},
-  1719:{r:'Honorarios Profesionales',d:'Representación Luciano',t:'fijo'},
-  // E012 — SERVICIOS
-  1658:{r:'Servicios',d:'Luz-Edenor 75%',t:'sistema'},
-  1659:{r:'Servicios',d:'Gas-Gas Natural 75%',t:'sistema'},
-  1660:{r:'Servicios',d:'Agua-Aysa 75%',t:'sistema'},
-  1662:{r:'Servicios',d:'Internet 75%',t:'sistema'},
-  1664:{r:'Servicios',d:'Sistemas 75%',t:'sistema'},
-  1668:{r:'Servicios',d:'Servicios Web Jose',t:'sistema'},
-  1691:{r:'Servicios',d:'Telefono Claro 75%',t:'sistema'},
-  1698:{r:'Servicios',d:'Prosegur 75%',t:'sistema'},
-  1700:{r:'Servicios',d:'Telefono Ivan 75%',t:'sistema'},
-  1704:{r:'Servicios',d:'Internet Ivan 75%',t:'sistema'},
-  1712:{r:'Servicios',d:'Telefono Rodrigo 75%',t:'sistema'},
-  1718:{r:'Servicios',d:'Vistage Ivan 50%',t:'sistema'},
-  1723:{r:'Servicios',d:'Vistage Luciano 75%',t:'sistema'},
-  // E013 — IMPUESTOS
-  1489:{r:'Impuestos',d:'Multas Impositivas',t:'sistema'},
-  1685:{r:'Impuestos',d:'Patentes 75%',t:'sistema'},
-  // E022 — MANTENIMIENTO LOCAL
-  1281:{r:'Mantenimiento Local',d:'Equipos Electrónicos Personal',t:'sistema'},
-  1733:{r:'Mantenimiento Local',d:'Fumigación 75%',t:'sistema'},
-  // E023 — CAMIONETAS
-  1290:{r:'Camionetas',d:'Fletes Varios',t:'sistema'},
-  1308:{r:'Camionetas',d:'Lubricentro 75%',t:'sistema'},
-  1311:{r:'Camionetas',d:'Combustible de Rodados',t:'sistema'},
-  1319:{r:'Camionetas',d:'Mantenim. Rodados 75%',t:'sistema'},
-  1329:{r:'Camionetas',d:'Seguros Rodados 75%',t:'sistema'},
-  1490:{r:'Camionetas',d:'Multas de Vehículos 75%',t:'sistema'},
-  1675:{r:'Camionetas',d:'Peajes 75%',t:'sistema'},
-  1735:{r:'Camionetas',d:'Compra de Maquinaria y Vehículos',t:'sistema'},
+  // GASTOS BANCARIOS
+  1295:{r:'Gastos Bancarios',d:'Comision Mantenimiento Bancario',t:'sistema'},
+  1464:{r:'Gastos Bancarios',d:'Gastos Bancarios',t:'sistema'},
+  // HONORARIOS Y VARIOS
+  89:{r:'Honorarios y Varios',d:'Gastos Varios',t:'sistema'},
+  275:{r:'Honorarios y Varios',d:'Atención con Clientes y Proveedores',t:'sistema'},
+  1666:{r:'Honorarios y Varios',d:'Honorarios Contador',t:'sistema'},
+  1667:{r:'Honorarios y Varios',d:'Honorarios Abogado',t:'sistema'},
+  1719:{r:'Honorarios y Varios',d:'Representación Luciano',t:'fijo'},
+  // MANTENIMIENTO
+  1287:{r:'Mantenimiento',d:'Libreria y Papelería 75%',t:'sistema'},
+  1306:{r:'Mantenimiento',d:'Gastos de Movilidad',t:'sistema'},
+  1463:{r:'Mantenimiento',d:'Gastos de Limpieza 75%',t:'sistema'},
+  1634:{r:'Mantenimiento',d:'Gastos de Almuerzo Personal',t:'sistema'},
+  1732:{r:'Mantenimiento',d:'Indumentaria del personal 75%',t:'sistema'},
+  1281:{r:'Mantenimiento',d:'Equipos Electrónicos Personal',t:'sistema'},
+  1320:{r:'Mantenimiento',d:'Mantenimiento Deposito y Camara',t:'sistema'},
+  1736:{r:'Mantenimiento',d:'Depósito de Frío Externo 75%',t:'sistema'},
+  1733:{r:'Mantenimiento',d:'Fumigación 75%',t:'sistema'},
+  // ALQUILERES Y SERVICIOS
+  209:{r:'Alquileres y Servicios',d:'Alquiler 75%',t:'sistema'},
+  1658:{r:'Alquileres y Servicios',d:'Luz-Edenor 75%',t:'sistema'},
+  1659:{r:'Alquileres y Servicios',d:'Gas-Gas Natural 75%',t:'sistema'},
+  1660:{r:'Alquileres y Servicios',d:'Agua-Aysa 75%',t:'sistema'},
+  1662:{r:'Alquileres y Servicios',d:'Internet 75%',t:'sistema'},
+  1664:{r:'Alquileres y Servicios',d:'Sistemas 75%',t:'sistema'},
+  1668:{r:'Alquileres y Servicios',d:'Servicios Web Jose',t:'sistema'},
+  1691:{r:'Alquileres y Servicios',d:'Telefono Claro 75%',t:'sistema'},
+  1698:{r:'Alquileres y Servicios',d:'Prosegur 75%',t:'sistema'},
+  1700:{r:'Alquileres y Servicios',d:'Telefono Ivan 75%',t:'sistema'},
+  1704:{r:'Alquileres y Servicios',d:'Internet Ivan 75%',t:'sistema'},
+  1712:{r:'Alquileres y Servicios',d:'Telefono Rodrigo 75%',t:'sistema'},
+  1718:{r:'Alquileres y Servicios',d:'Vistage Ivan 50%',t:'sistema'},
+  1723:{r:'Alquileres y Servicios',d:'Vistage Luciano 75%',t:'sistema'},
+  1489:{r:'Alquileres y Servicios',d:'Multas Impositivas',t:'sistema'},
+  1685:{r:'Alquileres y Servicios',d:'Patentes 75%',t:'sistema'},
+  // LOGÍSTICA
+  1290:{r:'Logística',d:'Fletes Varios',t:'sistema'},
+  1308:{r:'Logística',d:'Lubricentro 75%',t:'sistema'},
+  1311:{r:'Logística',d:'Combustible de Rodados',t:'sistema'},
+  1319:{r:'Logística',d:'Mantenim. Rodados 75%',t:'sistema'},
+  1329:{r:'Logística',d:'Seguros Rodados 75%',t:'sistema'},
+  1490:{r:'Logística',d:'Multas de Vehículos 75%',t:'sistema'},
+  1675:{r:'Logística',d:'Peajes 75%',t:'sistema'},
+  1735:{r:'Logística',d:'Compra de Maquinaria y Vehículos',t:'sistema'},
 };
 
 let ST={maestros:{
@@ -661,7 +659,7 @@ let ST={maestros:{
     {sku:200305,ns:'Bifecito Neo',      nd:'Bifecito Neo',     c:0},
     {sku:200243,ns:'Chicken Fingers',   nd:'Chicken Fingers',  c:0}
   ],
-  rubros:['Sueldos','Alquiler','Servicios','Gastos Varios','Honorarios Profesionales','Impuestos','Mantenimiento Local','Camionetas','Gastos Bancarios']
+  rubros:['Sueldos','Alquileres y Servicios','Logística','Honorarios y Varios','Mantenimiento','Gastos Bancarios']
 },months:{}};
 
 let AMK='2026-03',CH={},GF=null,RS={rb:{c:'v',d:-1},cm:{c:'v',d:-1},ro:{c:'v',d:-1}},PSC=-1,PSD=-1;
@@ -1141,10 +1139,10 @@ function renderAnual(){
         tooltip:{callbacks:{label:ctx=>{const m=all[ctx.dataIndex];return` Res.Op.: $${fm(ctx.raw,true)} (${fp(ctx.raw,m.ventas_netas)})`;}}}},
       scales:{x:{ticks:{color:'#7a7668'},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#7a7668',callback:v=>'$'+fm(v)},grid:{color:'rgba(255,255,255,.06)'}}}}});
 
-  const rows=['Ventas Netas','CMV','Resultado Bruto','IIBB','Comisión $','C. Marginal','Sueldos','Alquiler','Servicios','Gastos Varios','Honorarios Profesionales','Impuestos','Mantenimiento Local','Camionetas','Gastos Bancarios','Total Gastos','Resultado Op.','IIGG Estimado (30%)','Resultado Neto Estimado'];
+  const rows=['Ventas Netas','CMV','Resultado Bruto','IIBB','Comisión $','C. Marginal','Sueldos','Alquileres y Servicios','Logística','Honorarios y Varios','Mantenimiento','Gastos Bancarios','Total Gastos','Resultado Op.','IIGG Estimado (30%)','Resultado Neto Estimado'];
   const gR=(m,r)=>{const tg=Object.values(m.gastos).reduce((a,b)=>a+b,0),rb=m.ventas_netas-m.cmv,iigg=-Math.max(0,m.resultado_operativo*.30);const map={'Ventas Netas':m.ventas_netas,'CMV':-m.cmv,'Resultado Bruto':rb,'IIBB':-m.iibb,'Comisión $':-m.comisiones,'C. Marginal':m.contrib_marginal,'Total Gastos':-tg,'Resultado Op.':m.resultado_operativo,'IIGG Estimado (30%)':iigg,'Resultado Neto Estimado':m.resultado_operativo+iigg};return map[r]!==undefined?map[r]:-(m.gastos[r]||0);};
   const subs=['Resultado Bruto','C. Marginal','Total Gastos','Resultado Op.','IIGG Estimado (30%)','Resultado Neto Estimado'];
-  const negs=['CMV','IIBB','Comisión $','Sueldos','Alquiler','Servicios','Gastos Varios','Honorarios Profesionales','Impuestos','Mantenimiento Local','Camionetas','Gastos Bancarios','Total Gastos','IIGG Estimado (30%)'];
+  const negs=['CMV','IIBB','Comisión $','Sueldos','Alquileres y Servicios','Logística','Honorarios y Varios','Mantenimiento','Gastos Bancarios','Total Gastos','IIGG Estimado (30%)'];
 
   // Build structured rows same format as dashboard
   const aRows=[
@@ -1527,10 +1525,9 @@ function processMonth(){
   // ── D. GASTOS FROM EXPORTED SYSTEM ──
   const gs={
     'Sueldos':_cargaSueldos.reduce((a,s)=>a+(s.m||0),0),
-    'Alquiler':0,'Servicios':0,'Gastos Varios':0,
-    'Honorarios Profesionales':_cargaRepr.reduce((a,r)=>a+(r.m||0),0),
-    'Impuestos':0,'Mantenimiento Local':0,'Camionetas':0,
-    'Gastos Bancarios':0
+    'Alquileres y Servicios':0,'Logística':0,
+    'Honorarios y Varios':_cargaRepr.reduce((a,r)=>a+(r.m||0),0),
+    'Mantenimiento':0,'Gastos Bancarios':0
   };
   const gastos_det=_cargaSueldos.filter(s=>s.m>0).map(s=>({sku:'FIJO',d:s.n,r:'Sueldos',m:s.m}));
   // Add Representación Luciano items
